@@ -1,0 +1,17 @@
+{
+  "name": "sentiment-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "문장의 감성(긍정/부정/중립)을 분석하는 웹 서비스",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2",
+    "openai": "^4"
+  }
+}

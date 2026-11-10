@@ -1,0 +1,658 @@
+/* ==============================================================================
+   마음결 (Maeum-gyeol) 감성 분석 서비스 스타일시트
+   docs/02-ui-guide.md 명세를 준수하여 작성되었습니다.
+   ============================================================================== */
+
+/* ------------------------------------------------------------------------------
+   1. 디자인 토큰 (CSS 변수)
+   ------------------------------------------------------------------------------ */
+:root {
+  /* 색상 — 파랑 계열 */
+  --blue-700: #1D55E8;   /* 가장 짙은 파랑 (그라데이션 시작) */
+  --blue-600: #2F6BFF;   /* 메인 파랑 */
+  --blue-500: #4F8BFF;
+  --blue-300: #9CC4FF;
+  --blue-100: #CFE5FF;   /* 가장 연한 하늘색 (그라데이션 끝) */
+
+  /* 중립 색상 */
+  --ink-900: #0F172A;    /* 검정 버튼, 본문 강한 글자 */
+  --ink-600: #475569;    /* 보조 글자 */
+  --ink-300: #CBD5E1;    /* 테두리 */
+  --white: #FFFFFF;
+
+  /* 결과 색상 (글자색 / 배경색) */
+  --positive: #0E8F5F;
+  --positive-bg: #E3F7EE;
+  --negative: #D93A44;
+  --negative-bg: #FDE8EA;
+  --neutral: #52627A;
+  --neutral-bg: #E9EEF5;
+
+  /* 오류 색상 */
+  --error: #B42318;
+  --error-bg: #FEF0EE;
+
+  /* 모서리 모양 */
+  --radius-hero: 40px;
+  --radius-card: 28px;
+  --radius-pill: 999px;
+  --shadow-card: 0 12px 40px rgba(29, 85, 232, 0.18);
+
+  /* 기본 글꼴 */
+  --font: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+          'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+}
+
+/* ------------------------------------------------------------------------------
+   2. 기본 리셋 및 전체 스타일
+   ------------------------------------------------------------------------------ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font);
+  background-color: var(--white);
+  color: var(--ink-900);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 시각장애인 스크린리더 전용 텍스트 숨김 클래스 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 키보드 포커스 공통 스타일 (웹 접근성 준수) */
+button:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--white);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------------------
+   3. 히어로 컨테이너 (.hero)
+   ------------------------------------------------------------------------------ */
+.hero {
+  margin: 16px;
+  min-height: 640px;
+  border-radius: var(--radius-hero);
+  background: linear-gradient(115deg, var(--blue-700) 0%, var(--blue-600) 35%,
+              var(--blue-300) 75%, var(--blue-100) 100%);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+  padding: 72px 64px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* 히어로 배경에 은은하게 번지는 빛 효과 */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.45), transparent 55%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  max-width: 1120px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ------------------------------------------------------------------------------
+   4. 카피 및 제목 영역 (.hero-copy)
+   ------------------------------------------------------------------------------ */
+.hero-copy {
+  max-width: 560px;
+  position: relative;
+  z-index: 2;
+}
+
+.eyebrow {
+  font-size: 18px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8px;
+}
+
+.hero-title {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--white);
+  margin-bottom: 12px;
+  word-break: keep-all;
+}
+
+.hero-desc {
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 32px;
+}
+
+/* ------------------------------------------------------------------------------
+   5. 입력 카드 (.analyzer)
+   ------------------------------------------------------------------------------ */
+.analyzer {
+  background: var(--white);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 16px;
+}
+
+.analyzer textarea {
+  width: 100%;
+  min-height: 112px;
+  border: none;
+  background: transparent;
+  color: var(--ink-900);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  resize: none;
+  display: block;
+}
+
+.analyzer textarea::placeholder {
+  color: var(--ink-600);
+  opacity: 0.7;
+}
+
+.analyzer textarea:focus {
+  outline: none;
+}
+
+.analyzer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #F1F5F9;
+}
+
+.char-count {
+  font-size: 14px;
+  color: var(--ink-600);
+  font-weight: 500;
+}
+
+.char-count.warning {
+  color: var(--negative);
+}
+
+.char-count.max {
+  color: var(--negative);
+  font-weight: 700;
+}
+
+/* 버튼 그룹 */
+.button-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 알약 버튼 공통 */
+.btn {
+  height: 44px;
+  padding: 0 22px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  user-select: none;
+  text-decoration: none;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* 검정 알약 버튼 */
+.btn-dark {
+  background-color: var(--ink-900);
+  color: var(--white);
+}
+
+/* 흰색 알약 버튼 */
+.btn-light {
+  background-color: #F8FAFC;
+  color: var(--ink-900);
+  border: 1px solid var(--ink-300);
+}
+
+.btn-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* ------------------------------------------------------------------------------
+   6. 오류 박스 (.error-box)
+   ------------------------------------------------------------------------------ */
+.error-box {
+  background-color: var(--error-bg);
+  color: var(--error);
+  border: 1px solid #F9C9C2;
+  border-radius: 16px;
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  animation: fadeIn 0.25s ease;
+}
+
+/* ------------------------------------------------------------------------------
+   7. 결과 카드 (.result-card)
+   ------------------------------------------------------------------------------ */
+.result-card {
+  background: var(--white);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  color: var(--ink-900);
+  animation: slideUp 0.3s ease-out;
+}
+
+.result-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+/* 감성 뱃지 */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: var(--radius-pill);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.badge[data-sentiment="positive"] {
+  color: var(--positive);
+  background-color: var(--positive-bg);
+}
+
+.badge[data-sentiment="negative"] {
+  color: var(--negative);
+  background-color: var(--negative-bg);
+}
+
+.badge[data-sentiment="neutral"] {
+  color: var(--neutral);
+  background-color: var(--neutral-bg);
+}
+
+/* 신뢰도 점수 */
+.confidence-number {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ink-900);
+}
+
+/* 신뢰도 게이지 바 */
+.confidence-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #E2E8F0;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.confidence-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: var(--radius-pill);
+  background-color: var(--neutral);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.confidence-fill[data-sentiment="positive"] {
+  background-color: var(--positive);
+}
+
+.confidence-fill[data-sentiment="negative"] {
+  background-color: var(--negative);
+}
+
+.confidence-fill[data-sentiment="neutral"] {
+  background-color: var(--neutral);
+}
+
+/* 낮은 확신 안내 문구 */
+.low-note {
+  font-size: 13px;
+  color: var(--ink-600);
+  margin-bottom: 16px;
+}
+
+/* 분석 이유 */
+.result-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-600);
+  margin-bottom: 6px;
+}
+
+.result-reason {
+  font-size: 16px;
+  color: var(--ink-900);
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+/* ------------------------------------------------------------------------------
+   8. 유리 도형 (.hero-visual) — CSS 그래픽
+   ------------------------------------------------------------------------------ */
+.hero-visual {
+  position: absolute;
+  right: 60px;
+  top: 60px;
+  width: 300px;
+  height: 300px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glass {
+  position: absolute;
+  width: 210px;
+  height: 210px;
+  border-radius: 56px;
+  transform: rotate(14deg);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: inset 0 2px 12px rgba(255, 255, 255, 0.7), 0 20px 40px rgba(29, 85, 232, 0.25);
+}
+
+.glass-back {
+  left: 0;
+  top: 30px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.25));
+}
+
+.glass-front {
+  right: 0;
+  top: 0;
+  background: linear-gradient(145deg, #3F7DFF, #1D55E8);
+  display: grid;
+  place-items: center;
+}
+
+.glass-front span {
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 34px;
+  transform: rotate(-14deg);
+}
+
+/* 부드러운 둥둥 떠 있는 애니메이션 */
+@media (prefers-reduced-motion: no-preference) {
+  .glass-front {
+    animation: float 6s ease-in-out infinite;
+  }
+  .glass-back {
+    animation: float 7s ease-in-out infinite reverse;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: rotate(14deg) translateY(0);
+  }
+  50% {
+    transform: rotate(14deg) translateY(-10px);
+  }
+}
+
+/* ------------------------------------------------------------------------------
+   9. 예시 카드 (.sample-card)
+   ------------------------------------------------------------------------------ */
+.sample-card {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 340px;
+  background: var(--white);
+  border-radius: 48px 0 var(--radius-hero) 0;
+  padding: 28px 24px 24px;
+  box-shadow: var(--shadow-card);
+  color: var(--ink-900);
+  z-index: 2;
+}
+
+.tooltip {
+  position: absolute;
+  top: -14px;
+  left: 28px;
+  background-color: var(--ink-900);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.sample-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-900);
+  margin-bottom: 14px;
+}
+
+.sample-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sample-btn {
+  width: 100%;
+  text-align: left;
+  background-color: var(--blue-100);
+  color: var(--blue-700);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 10px 16px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.sample-btn:hover {
+  background-color: #BADAFF;
+  transform: translateX(2px);
+}
+
+.sample-btn:focus-visible {
+  outline: 3px solid var(--blue-600);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------------------
+   10. 개인정보 보호 안내 (.privacy-note)
+   ------------------------------------------------------------------------------ */
+.privacy-note {
+  margin-top: 36px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* ------------------------------------------------------------------------------
+   11. 등장 애니메이션
+   ------------------------------------------------------------------------------ */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------------------------
+   12. 반응형 미디어 쿼리
+   ------------------------------------------------------------------------------ */
+/* 태블릿 (폭 640px ~ 1023px) */
+@media (max-width: 1023px) {
+  .hero {
+    padding: 48px 36px 36px;
+  }
+  
+  .hero-copy {
+    max-width: 100%;
+  }
+
+  .hero-visual {
+    right: 20px;
+    top: 30px;
+    width: 200px;
+    height: 200px;
+    opacity: 0.9;
+  }
+
+  .glass {
+    width: 150px;
+    height: 150px;
+    border-radius: 40px;
+  }
+
+  .glass-front span {
+    font-size: 26px;
+  }
+
+  .sample-card {
+    position: static;
+    width: 100%;
+    margin-top: 24px;
+    border-radius: var(--radius-card);
+  }
+
+  .tooltip {
+    left: 20px;
+  }
+}
+
+/* 모바일 (폭 640px 미만) */
+@media (max-width: 639px) {
+  .hero {
+    margin: 8px;
+    padding: 40px 20px 28px;
+    border-radius: 28px;
+  }
+
+  .eyebrow {
+    font-size: 15px;
+  }
+
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .hero-desc {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .hero-visual {
+    width: 140px;
+    height: 140px;
+    right: 0;
+    top: 10px;
+    opacity: 0.75;
+  }
+
+  .glass {
+    width: 100px;
+    height: 100px;
+    border-radius: 26px;
+  }
+
+  .glass-front span {
+    font-size: 18px;
+  }
+
+  .button-group {
+    width: 100%;
+  }
+
+  .button-group .btn {
+    flex: 1;
+  }
+
+  .analyzer-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .button-group {
+    width: 100%;
+  }
+
+  .badge {
+    font-size: 22px;
+  }
+
+  .confidence-number {
+    font-size: 24px;
+  }
+}
+

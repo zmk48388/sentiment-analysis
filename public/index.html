@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마음결</title>
+  <!-- 눈이 편안한 Pretendard 글꼴 로드 (공식 CDN) -->
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <!-- 스타일시트 연결 -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- 전체 메인 히어로 컨테이너 (둥근 모서리와 파란 그라데이션) -->
+  <main class="hero">
+    <div class="hero-inner">
+      <!-- 왼쪽 콘텐츠 영역: 제목, 입력 폼, 결과 카드, 오류 박스 -->
+      <section class="hero-copy">
+        <p class="eyebrow">감정은 글에 담기니까</p>
+        <h1 class="hero-title">마음이 궁금한 순간, 감성 분석</h1>
+        <p class="hero-desc">문장을 입력하면 AI가 긍정·부정·중립을 읽어드려요.</p>
+
+        <!-- 감성 분석 입력 폼 -->
+        <form id="analyze-form" class="analyzer" novalidate>
+          <!-- 스크린리더 사용자를 위한 숨김 라벨 -->
+          <label for="text-input" class="sr-only">분석할 문장</label>
+          <textarea id="text-input" name="text" rows="4" maxlength="500"
+            placeholder="분석하고 싶은 문장을 입력해 주세요."></textarea>
+          
+          <div class="analyzer-footer">
+            <!-- 글자 수 카운터 -->
+            <span id="char-count" class="char-count">0 / 500</span>
+            
+            <!-- 버튼 그룹 (분석하기, 지우기) -->
+            <div class="button-group">
+              <button type="submit" id="submit-btn" class="btn btn-dark">
+                <span class="btn-label">분석하기</span><span class="btn-icon" aria-hidden="true">↗</span>
+              </button>
+              <button type="button" id="reset-btn" class="btn btn-light">
+                <span class="btn-label">지우기</span>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- 오류 메시지 표시 영역 (스크린리더 즉각 알림 role="alert") -->
+        <div id="error-box" class="error-box" role="alert" hidden></div>
+
+        <!-- 감성 분석 결과 카드 (결과 발생 시 스크린리더가 자연스럽게 읽어주도록 aria-live="polite") -->
+        <section id="result-card" class="result-card" aria-live="polite" hidden>
+          <div class="result-top">
+            <span id="result-badge" class="badge">중립</span>
+            <span id="result-confidence" class="confidence-number">0%</span>
+          </div>
+          <!-- 신뢰도 시각화 게이지 막대 -->
+          <div class="confidence-bar" aria-hidden="true">
+            <div id="confidence-fill" class="confidence-fill"></div>
+          </div>
+          <p id="low-confidence-note" class="low-note" hidden>확신이 낮은 결과예요.</p>
+          <h2 class="result-label">분석 이유</h2>
+          <p id="result-reason" class="result-reason"></p>
+        </section>
+      </section>
+
+      <!-- 오른쪽 상단: 유리 질감의 둥근 입체 장식 도형 (CSS 순수 그래픽) -->
+      <aside class="hero-visual" aria-hidden="true">
+        <div class="glass glass-back"></div>
+        <div class="glass glass-front"><span>감성</span></div>
+      </aside>
+
+      <!-- 오른쪽 하단: 클릭하면 자동 입력되는 예시 문장 카드 -->
+      <aside class="sample-card">
+        <span class="tooltip">예시를 눌러보세요!</span>
+        <p class="sample-title">이런 문장으로 체험해 보세요</p>
+        <ul class="sample-list">
+          <li><button type="button" class="sample-btn" data-text="이 가게 음식이 정말 맛있고 직원분들도 너무 친절했어요!">긍정 예시</button></li>
+          <li><button type="button" class="sample-btn" data-text="배송이 일주일이나 늦었고 문의해도 답변이 없어서 너무 실망했어요.">부정 예시</button></li>
+          <li><button type="button" class="sample-btn" data-text="오늘 회의는 오후 3시에 3층 회의실에서 진행됩니다.">중립 예시</button></li>
+        </ul>
+      </aside>
+    </div>
+
+    <!-- 개인정보 주의 및 저장 사실 안내 문구 -->
+    <p class="privacy-note">입력한 문장은 분석 기록 저장을 위해 보관될 수 있어요. 개인정보는 입력하지 마세요.</p>
+  </main>
+
+  <!-- 프론트엔드 제어 스크립트 -->
+  <script src="/js/app.js" defer></script>
+</body>
+</html>

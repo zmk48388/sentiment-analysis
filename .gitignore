@@ -1,0 +1,17 @@
+# 의존성 패키지 폴더 제외 (용량이 매우 큼)
+node_modules/
+
+# 보안: 비밀번호 및 API 키가 담긴 환경변수 파일 제외 (절대 업로드 금지)
+.env
+.env.*
+!.env.example
+
+# Vercel 로컬 빌드 및 캐시 디렉터리 제외
+.vercel/
+
+# 운영체제 및 에디터 임시 파일 제외
+.DS_Store
+Thumbs.db
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
